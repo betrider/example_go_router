@@ -1,9 +1,13 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
+
+import 'annotation.dart';
 
 Builder router(BuilderOptions options) {
   return PartBuilder(
@@ -18,10 +22,6 @@ Builder router(BuilderOptions options) {
     options: options,
     allowSyntaxErrors: true,
   );
-}
-
-class GoRouterAnnotation {
-  const GoRouterAnnotation();
 }
 
 class GoRouterGenerator extends GeneratorForAnnotation<GoRouterAnnotation> {
@@ -41,11 +41,10 @@ class GoRouterGenerator extends GeneratorForAnnotation<GoRouterAnnotation> {
     BuildStep buildStep,
   ) {
     final visitor = _Visitor();
+
     print('Router builder start -->');
-    for (var e in element.children) {
-      // e.accept(visitor);
-      e.visitChildren(visitor);
-    }
+    //TODO: type check here
+    element.accept(visitor);
     print('<-- Router builder end.');
     //! Never return empty string, or it wouldn't create part file
     return '''
@@ -66,204 +65,13 @@ class GoRouterGenerator extends GeneratorForAnnotation<GoRouterAnnotation> {
   }
 }
 
-class _Visitor extends RecursiveElementVisitor<void> {
+class _Visitor extends SimpleElementVisitor<void> {
   _Visitor() {
     print('init visitor');
   }
 
   @override
-  void visitAugmentationImportElement(AugmentationImportElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitClassElement(ClassElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitCompilationUnitElement(CompilationUnitElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitConstructorElement(ConstructorElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitEnumElement(EnumElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitExtensionElement(ExtensionElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitExtensionTypeElement(ExtensionTypeElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitFieldElement(FieldElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitFieldFormalParameterElement(FieldFormalParameterElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitFunctionElement(FunctionElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitGenericFunctionTypeElement(GenericFunctionTypeElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitLabelElement(LabelElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitLibraryAugmentationElement(LibraryAugmentationElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitLibraryElement(LibraryElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitLibraryExportElement(LibraryExportElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitLibraryImportElement(LibraryImportElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitLocalVariableElement(LocalVariableElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitMethodElement(MethodElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitMixinElement(MixinElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitMultiplyDefinedElement(MultiplyDefinedElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitParameterElement(ParameterElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitPartElement(PartElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitPrefixElement(PrefixElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitPropertyAccessorElement(PropertyAccessorElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitSuperFormalParameterElement(SuperFormalParameterElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
   void visitTopLevelVariableElement(TopLevelVariableElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitTypeAliasElement(TypeAliasElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
-  }
-
-  @override
-  void visitTypeParameterElement(TypeParameterElement element) {
-    print(element.name);
-    element.visitChildren(this);
-    return;
+    print(element);
   }
 }

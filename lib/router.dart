@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:go_router_builder/router_builder.dart';
+import 'package:go_router_builder/annotation.dart';
 
-part 'router.router.dart';
+// part 'router.router.dart';
 
 // final router = _R();
 

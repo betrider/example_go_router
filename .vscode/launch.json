@@ -10,12 +10,6 @@
             "type": "dart"
         },
         {
-            "name": "example_go_router (profile mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
             "name": "example_go_router (release mode)",
             "request": "launch",
             "type": "dart",
@@ -23,23 +17,13 @@
         },
         {
             "name": "go_router_builder",
-            "cwd": "go_router_builder",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "go_router_builder (profile mode)",
-            "cwd": "go_router_builder",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "go_router_builder (release mode)",
-            "cwd": "go_router_builder",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
+            "program": ".dart_tool/build/entrypoint/build.dart",
+            "args": [
+                "build",
+                "--delete-conflicting-outputs"
+            ]
         }
     ]
 }
