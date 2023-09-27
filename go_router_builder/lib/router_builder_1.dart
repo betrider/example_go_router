@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:async';
+
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
@@ -15,23 +17,24 @@ Builder router(BuilderOptions options) => LibraryBuilder(
 
 class GoRouterGenerator extends Generator {
   @override
-  String generate(LibraryReader library, BuildStep buildStep) {
-    //! Never return empty string, or it wouldn't create part file
-    final annotatedVariables = library.annotatedWith(const TypeChecker.fromRuntime(GoRouterAnnotation));
-
+  FutureOr<String> generate(LibraryReader library, BuildStep buildStep) async {
     final generatedCode = StringBuffer();
-
-    for (final variableElement in annotatedVariables) {
-      if (variableElement is VariableElement) {
-        print(variableElement);
-      }
-    }
-
-    return '''
+    generatedCode.write('''
       final routes = <RouteBase>[
         //
       ];
-    ''';
+    ''');
+    //! Never return empty string, or it wouldn't create part file
+    // find marked variables
+    final annotatedVariables = library.annotatedWith(const TypeChecker.fromRuntime(GoRouterAnnotation));
+    for (final variable in annotatedVariables) {
+      final e = variable.element;
+      if (e is TopLevelVariableElement) {
+        print(e.computeConstantValue());
+      }
+    }
+
+    return generatedCode.toString();
   }
 }
 

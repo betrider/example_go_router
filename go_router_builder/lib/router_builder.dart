@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/visitor.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -40,18 +39,31 @@ class GoRouterGenerator extends GeneratorForAnnotation<GoRouterAnnotation> {
     ConstantReader annotation,
     BuildStep buildStep,
   ) {
-    final visitor = _Visitor();
-
+    final generatedCode = StringBuffer();
     print('Router builder start -->');
-    //TODO: type check here
-    element.accept(visitor);
+
+    if (element is TopLevelVariableElement) {
+      final value = element.computeConstantValue();
+      final set = value?.toSetValue();
+      if (set != null) {
+        generatedCode.write('''
+          class _Root {
+            final routes = <RouteBase>[
+              //
+            ];
+          }
+        ''');
+      } else {
+        //TODO error handling
+      }
+    } else {
+      //TODO error handling
+    }
+
     print('<-- Router builder end.');
+
     //! Never return empty string, or it wouldn't create part file
-    return '''
-      final routes = <RouteBase>[
-        //
-      ];
-    ''';
+    return generatedCode.toString();
   }
 
   String getClassNameFromAnnotation(ConstantReader annotation) {
@@ -65,13 +77,13 @@ class GoRouterGenerator extends GeneratorForAnnotation<GoRouterAnnotation> {
   }
 }
 
-class _Visitor extends SimpleElementVisitor<void> {
-  _Visitor() {
-    print('init visitor');
-  }
+// class _Visitor extends SimpleElementVisitor<void> {
+//   _Visitor() {
+//     print('init visitor');
+//   }
 
-  @override
-  void visitTopLevelVariableElement(TopLevelVariableElement element) {
-    print(element);
-  }
-}
+//   @override
+//   void visitTopLevelVariableElement(TopLevelVariableElement element) {
+//     print(element);
+//   }
+// }
