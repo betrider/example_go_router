@@ -5,10 +5,10 @@ targets:
         enabled: true
         generate_for:
           - lib/*.dart
-      go_router_builder|meta:
-        enabled: false
-        generate_for:
-          - lib/*.dart
+      # go_router_builder|meta:
+      #   enabled: false
+      #   generate_for:
+      #     - lib/*.dart
       source_gen|combining_builder:
         options:
           ignore_for_file:
