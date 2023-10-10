@@ -31,46 +31,113 @@ final router = <RouteBase>[
           ),
         ],
       ),
+      GoRoute(
+        path: 'product',
+        builder: (context, state) {
+          return MyHomePage();
+        },
+      ),
     ],
   ),
 ];
 //-----------------------------------------
 final route = _$root();
 
-class _$root$home$user$detail {
+class _$root$home$product with _ClassRouteMixin {
+  _$root$home$product(
+    this._$parent,
+  );
+
+  _ClassRouteMixin _$parent;
+
   @override
   String toString() {
-    return "/home/user/detail";
+    return _$parent.toString() + "product" + _$queryString;
   }
 }
 
-class _$root$home$user {
-  final String id;
-  _$root$home$user({
-    required this.id,
-  });
+class _$root$home$user$detail with _ClassRouteMixin {
+  _$root$home$user$detail(
+    this._$parent,
+  );
+
+  _ClassRouteMixin _$parent;
+
   @override
   String toString() {
-    return "/home/user/$id";
+    return _$parent.toString() + "detail" + _$queryString;
   }
-
-  final user = _$root$home$user$detail();
 }
 
-class _$root$home {
+class _$root$home$user with _ClassRouteMixin {
+  final String __id__;
+  _$root$home$user(
+    this._$parent, {
+    required String id,
+  }) : __id__ = id;
+
+  _ClassRouteMixin _$parent;
+
   @override
   String toString() {
-    return "/home";
+    return _$parent.toString() + "user/${__id__}" + _$queryString;
   }
 
-  final home = _$root$home$user.new;
+  _$root$home$user$detail get detail {
+    return _$root$home$user$detail(this);
+  }
 }
 
-class _$root {
+class _$root$home with _ClassRouteMixin {
+  _$root$home(
+    this._$parent,
+  );
+
+  _ClassRouteMixin _$parent;
+
   @override
   String toString() {
-    return "/root";
+    return _$parent.toString() + "home" + _$queryString;
   }
 
-  final root = _$root$home();
+  _$root$home$user user({
+    required String id,
+  }) {
+    return _$root$home$user(
+      this,
+      id: id,
+    );
+  }
+
+  _$root$home$product get product {
+    return _$root$home$product(this);
+  }
+}
+
+class _$root with _ClassRouteMixin {
+  _$root();
+
+  @override
+  String toString() {
+    return "/" + _$queryString;
+  }
+
+  _$root$home get home {
+    return _$root$home(this);
+  }
+}
+
+//-----------------------------------------
+mixin _ClassRouteMixin {
+  Map<String, String?> _$queryArgumentsMap = {};
+  String get _$queryString => _$queryArgumentsMap.entries.fold(
+        "",
+        (prev, e) {
+          if (e.value != null) {
+            final pre = _$queryArgumentsMap.entries.first == e ? "?" : "&";
+            return "$prev$pre${e.key}=${e.value}";
+          }
+          return prev;
+        },
+      );
 }

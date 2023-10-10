@@ -121,10 +121,10 @@ const _routes = {
           ),
         },
       ),
-      // BuildRoute(
-      //   'product',
-      //   pageClassType: MyHomePage,
-      // ),
+      BuildRoute(
+        'product',
+        pageClassType: MyHomePage,
+      ),
       // BuildShellRoute(
       //   pageClassType: MyHomePage,
       //   routes: {
@@ -148,4 +148,7 @@ FutureOr<String?> redirectHome(BuildContext context, GoRouterState state) {
   return null;
 }
 
-void xxx() {}
+void xxx() {
+  route.home.user(id: '').detail.toString();
+  // route.home.product.toString();
+}
