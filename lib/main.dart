@@ -34,6 +34,18 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+class MyProduct extends StatefulWidget {
+  final String id;
+  final String type;
+  final String? view;
+  final String? name;
+  final String? title;
+  const MyProduct({super.key, required this.id, required this.type, this.view, this.name, this.title});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   final int _counter = 0;
 
@@ -57,6 +69,11 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            Text(route.home.user(id: '123').detail.toString()),
+            Text(route.home
+                .product(id: 'a1q23', type: 'class', view: 'all', name: 'Product')
+                .puser(id: '098')
+                .toString()),
           ],
         ),
       ),
@@ -68,33 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-//-------------------------------------------------------------------------------------
-
-// final router = _R();
-
-// class _R {
-//   _Home home([String? param]) => _Home();
-
-//   final chat = _RouterElementFunc<_Chat>;
-//   final alarm = _RouterElementFunc<_Alarm>;
-
-//   List<_RouterElementFunc> equatable() => [home];
-// }
-
-// class _Home extends _RouterElement {
-//   _Detail detail() => _Detail();
-// }
-
-// class _Chat extends _RouterElement {
-//   _Home list() => _Home();
-// }
-
-// class _Alarm extends _RouterElement {
-//   _Home list() => _Home();
-// }
-
-// class _Detail extends _RouterElement {}
 
 class Routes {
   static const String list = 'list';
@@ -123,22 +113,31 @@ const _routes = {
       ),
       BuildRoute(
         'product',
-        pageClassType: MyHomePage,
+        pathArguments: {'id', 'type'},
+        arguments: {'view', 'name', 'title'},
+        pageClassType: MyProduct,
+        routes: {
+          BuildRoute(
+            'puser',
+            pathArguments: {'id'},
+            pageClassType: MyHomePage,
+          ),
+        },
       ),
-      // BuildShellRoute(
-      //   pageClassType: MyHomePage,
-      //   routes: {
-      //     BuildRoute(
-      //       'user1',
-      //       pathArguments: {'id'},
-      //       pageClassType: MyHomePage,
-      //     ),
-      //     BuildRoute(
-      //       'product1',
-      //       pageClassType: MyHomePage,
-      //     ),
-      //   },
-      // ),
+      BuildShellRoute(
+        pageClassType: MyHomePage,
+        routes: {
+          BuildRoute(
+            'user1',
+            pathArguments: {'id'},
+            pageClassType: MyHomePage,
+          ),
+          BuildRoute(
+            'product1',
+            pageClassType: MyHomePage,
+          ),
+        },
+      ),
     },
     redirect: redirectHome,
   ),
@@ -146,9 +145,4 @@ const _routes = {
 
 FutureOr<String?> redirectHome(BuildContext context, GoRouterState state) {
   return null;
-}
-
-void xxx() {
-  route.home.user(id: '').detail.toString();
-  // route.home.product.toString();
 }

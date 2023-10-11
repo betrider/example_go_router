@@ -10,12 +10,6 @@
             "type": "dart"
         },
         {
-            "name": "example_go_router (release mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
             "name": "go_router_builder",
             "request": "launch",
             "type": "dart",

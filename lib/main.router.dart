@@ -20,7 +20,9 @@ final router = <RouteBase>[
       GoRoute(
         path: 'user/:id',
         builder: (context, state) {
-          return MyHomePage(id: state.pathParameters['id']!);
+          return MyHomePage(
+            id: state.pathParameters['id']!,
+          );
         },
         routes: [
           GoRoute(
@@ -32,10 +34,44 @@ final router = <RouteBase>[
         ],
       ),
       GoRoute(
-        path: 'product',
+        path: 'product/:id/:type',
         builder: (context, state) {
-          return MyHomePage();
+          return MyProduct(
+            id: state.pathParameters['id']!,
+            type: state.pathParameters['type']!,
+            view: state.uri.queryParameters['view']!,
+            name: state.uri.queryParameters['name']!,
+            title: state.uri.queryParameters['title']!,
+          );
         },
+        routes: [
+          GoRoute(
+            path: 'puser/:id',
+            builder: (context, state) {
+              return MyHomePage(
+                id: state.pathParameters['id']!,
+              );
+            },
+          ),
+        ],
+      ),
+      ShellRoute(
+        routes: [
+          GoRoute(
+            path: 'user1/:id',
+            builder: (context, state) {
+              return MyHomePage(
+                id: state.pathParameters['id']!,
+              );
+            },
+          ),
+          GoRoute(
+            path: 'product1',
+            builder: (context, state) {
+              return MyHomePage();
+            },
+          ),
+        ],
       ),
     ],
   ),
@@ -43,16 +79,43 @@ final router = <RouteBase>[
 //-----------------------------------------
 final route = _$root();
 
-class _$root$home$product with _ClassRouteMixin {
-  _$root$home$product(
+class _$root$home$product1 with _ClassRouteMixin {
+  _$root$home$product1(
     this._$parent,
   );
-
   _ClassRouteMixin _$parent;
 
   @override
   String toString() {
-    return _$parent.toString() + "product" + _$queryString;
+    return _$parent.toString() + "/" + "product1" + _$queryString;
+  }
+}
+
+class _$root$home$user1 with _ClassRouteMixin {
+  final String __id__;
+  _$root$home$user1(
+    this._$parent, {
+    required String id,
+  }) : __id__ = id;
+  _ClassRouteMixin _$parent;
+
+  @override
+  String toString() {
+    return _$parent.toString() + "/" + "user1/${__id__}" + _$queryString;
+  }
+}
+
+class _$root$home$product$puser with _ClassRouteMixin {
+  final String __id__;
+  _$root$home$product$puser(
+    this._$parent, {
+    required String id,
+  }) : __id__ = id;
+  _ClassRouteMixin _$parent;
+
+  @override
+  String toString() {
+    return _$parent.toString() + "/" + "puser/${__id__}" + _$queryString;
   }
 }
 
@@ -60,12 +123,11 @@ class _$root$home$user$detail with _ClassRouteMixin {
   _$root$home$user$detail(
     this._$parent,
   );
-
   _ClassRouteMixin _$parent;
 
   @override
   String toString() {
-    return _$parent.toString() + "detail" + _$queryString;
+    return _$parent.toString() + "/" + "detail" + _$queryString;
   }
 }
 
@@ -75,12 +137,11 @@ class _$root$home$user with _ClassRouteMixin {
     this._$parent, {
     required String id,
   }) : __id__ = id;
-
   _ClassRouteMixin _$parent;
 
   @override
   String toString() {
-    return _$parent.toString() + "user/${__id__}" + _$queryString;
+    return _$parent.toString() + "/" + "user/${__id__}" + _$queryString;
   }
 
   _$root$home$user$detail get detail {
@@ -88,16 +149,59 @@ class _$root$home$user with _ClassRouteMixin {
   }
 }
 
-class _$root$home with _ClassRouteMixin {
-  _$root$home(
-    this._$parent,
-  );
-
+class _$root$home$product with _ClassRouteMixin {
+  final String __id__;
+  final String __type__;
+  final String? __view__;
+  final String? __name__;
+  final String? __title__;
+  @override
+  late Map<String, String?> _$queryArgumentsMap = {
+    "view": __view__,
+    "name": __name__,
+    "title": __title__,
+  };
+  _$root$home$product(
+    this._$parent, {
+    required String id,
+    required String type,
+    String? view,
+    String? name,
+    String? title,
+  })  : __id__ = id,
+        __type__ = type,
+        __view__ = view,
+        __name__ = name,
+        __title__ = title;
   _ClassRouteMixin _$parent;
 
   @override
   String toString() {
-    return _$parent.toString() + "home" + _$queryString;
+    return _$parent.toString() +
+        "/" +
+        "product/${__id__}/${__type__}" +
+        _$queryString;
+  }
+
+  _$root$home$product$puser puser({
+    required String id,
+  }) {
+    return _$root$home$product$puser(
+      this,
+      id: id,
+    );
+  }
+}
+
+class _$root$home with _ClassRouteMixin {
+  _$root$home(
+    this._$parent,
+  );
+  _ClassRouteMixin _$parent;
+
+  @override
+  String toString() {
+    return _$parent.toString() + "/" + "home" + _$queryString;
   }
 
   _$root$home$user user({
@@ -109,8 +213,34 @@ class _$root$home with _ClassRouteMixin {
     );
   }
 
-  _$root$home$product get product {
-    return _$root$home$product(this);
+  _$root$home$product product({
+    required String id,
+    required String type,
+    String? view,
+    String? name,
+    String? title,
+  }) {
+    return _$root$home$product(
+      this,
+      id: id,
+      type: type,
+      view: view,
+      name: name,
+      title: title,
+    );
+  }
+
+  _$root$home$user1 user1({
+    required String id,
+  }) {
+    return _$root$home$user1(
+      this,
+      id: id,
+    );
+  }
+
+  _$root$home$product1 get product1 {
+    return _$root$home$product1(this);
   }
 }
 
@@ -119,7 +249,7 @@ class _$root with _ClassRouteMixin {
 
   @override
   String toString() {
-    return "/" + _$queryString;
+    return "" + _$queryString;
   }
 
   _$root$home get home {
@@ -129,12 +259,13 @@ class _$root with _ClassRouteMixin {
 
 //-----------------------------------------
 mixin _ClassRouteMixin {
-  Map<String, String?> _$queryArgumentsMap = {};
+  late Map<String, String?> _$queryArgumentsMap = {};
   String get _$queryString => _$queryArgumentsMap.entries.fold(
         "",
         (prev, e) {
           if (e.value != null) {
-            final pre = _$queryArgumentsMap.entries.first == e ? "?" : "&";
+            final pre =
+                _$queryArgumentsMap.entries.first.key == e.key ? "?" : "&";
             return "$prev$pre${e.key}=${e.value}";
           }
           return prev;
