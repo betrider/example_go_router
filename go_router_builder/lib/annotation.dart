@@ -17,11 +17,11 @@ class BuildRoute extends _BuildRoute {
   final Set<String>? pathArguments;
   final Set<String>? arguments;
   final Function? redirect;
-  //
   final Type? pageClassType;
-  final String? customPageBuilder;
+  final Function? pageBuilder;
   final Set<_BuildRoute>? routes;
   final String? parentNavigatorKey;
+  final bool extra;
 
   const BuildRoute(
     this.path, {
@@ -32,7 +32,8 @@ class BuildRoute extends _BuildRoute {
     this.arguments,
     this.routes,
     this.pageClassType,
-    this.customPageBuilder,
+    this.pageBuilder,
+    this.extra = false,
   });
 }
 

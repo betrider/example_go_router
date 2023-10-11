@@ -115,14 +115,15 @@ class GoRouterGenerator extends GeneratorForAnnotation<GoRouterAnnotation> {
         // create pageBuilder
         //TODO type check
         final pageClassType = element.getField('pageClassType')?.toTypeValue();
-        final customPageBuilder = element.getField('customPageBuilder')?.toFunctionValue();
+        final pageBuilder = element.getField('pageBuilder')?.toFunctionValue();
         assert(
-          pageClassType != null || customPageBuilder != null,
-          'Either pageClassType or customPageBuilder should be used.',
+          pageClassType != null || pageBuilder != null,
+          'Either pageClassType or pageBuilder should be used.',
         );
         if (pageClassType != null) {
           final type = pageClassType.getDisplayString(withNullability: false);
           final arguments = element.getField('arguments')?.toSetValue();
+          final extra = element.getField('extra')?.toBoolValue();
           buffer.writeAll([
             'builder: (context, state) {',
             '  return $type(',
@@ -136,12 +137,13 @@ class GoRouterGenerator extends GeneratorForAnnotation<GoRouterAnnotation> {
                 final argName = arg.toStringValue();
                 return '$argName: state.uri.queryParameters[\'$argName\']!,';
               }),
+            if (extra == true) 'extra: state.extra,',
             '  );',
             '},',
           ], '\n');
         }
-        if (customPageBuilder != null) {
-          buffer.write('pageBuilder: ${customPageBuilder.displayName},');
+        if (pageBuilder != null) {
+          buffer.write('pageBuilder: ${pageBuilder.displayName},');
         }
         // add options
         final redirect = element.getField('redirect')?.toFunctionValue();

@@ -22,6 +22,7 @@ final router = <RouteBase>[
         builder: (context, state) {
           return MyHomePage(
             id: state.pathParameters['id']!,
+            extra: state.extra,
           );
         },
         routes: [
@@ -77,7 +78,7 @@ final router = <RouteBase>[
   ),
 ];
 //-----------------------------------------
-final route = _$root();
+final airoute = _$root();
 
 class _$root$home$product1 with _ClassRouteMixin {
   _$root$home$product1(

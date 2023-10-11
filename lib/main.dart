@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   final String? id;
-  const MyHomePage({super.key, this.id});
+  final Object? extra;
+  const MyHomePage({super.key, this.id, this.extra});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -69,11 +70,16 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            Text(route.home.user(id: '123').detail.toString()),
-            Text(route.home
-                .product(id: 'a1q23', type: 'class', view: 'all', name: 'Product')
-                .puser(id: '098')
+            // Text(airoute.home.user(id: '123').detail.toString()),
+            Text(airoute.home.user(id: '123123').detail.toString()),
+            Text(airoute.home
+                .product(id: '93274678', type: 'product', view: 'all', name: 'Product1')
+                .puser(id: '908asd')
                 .toString()),
+            // Text(airoute.home
+            //     .product(id: 'a1q23', type: 'class', view: 'all', name: 'Product')
+            //     .puser(id: '098')
+            //     .toString()),
           ],
         ),
       ),
@@ -93,7 +99,7 @@ class Routes {
   static const String update = 'update';
 }
 
-@GoRouterAnnotation()
+@GoRouterAnnotation(rootArgument: 'airoute')
 // ignore: unused_element
 const _routes = {
   BuildRoute(
@@ -105,11 +111,9 @@ const _routes = {
         pathArguments: {'id'},
         pageClassType: MyHomePage,
         routes: {
-          BuildRoute(
-            Routes.detail,
-            pageClassType: MyHomePage,
-          ),
+          BuildRoute(Routes.detail, pageClassType: MyHomePage),
         },
+        extra: true,
       ),
       BuildRoute(
         'product',
@@ -117,25 +121,14 @@ const _routes = {
         arguments: {'view', 'name', 'title'},
         pageClassType: MyProduct,
         routes: {
-          BuildRoute(
-            'puser',
-            pathArguments: {'id'},
-            pageClassType: MyHomePage,
-          ),
+          BuildRoute('puser', pathArguments: {'id'}, pageClassType: MyHomePage),
         },
       ),
       BuildShellRoute(
         pageClassType: MyHomePage,
         routes: {
-          BuildRoute(
-            'user1',
-            pathArguments: {'id'},
-            pageClassType: MyHomePage,
-          ),
-          BuildRoute(
-            'product1',
-            pageClassType: MyHomePage,
-          ),
+          BuildRoute('user1', pathArguments: {'id'}, pageClassType: MyHomePage),
+          BuildRoute('product1', pageClassType: MyHomePage),
         },
       ),
     },
